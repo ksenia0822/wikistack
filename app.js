@@ -2,9 +2,9 @@ var express = require('express');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var app = express();
-var swig = requre('swig');
+var swig = require('swig');
 
-var routes = require('./index.js');
+// var routes = require('./index.js');
 
 app.use(morgan('dev'));
 
