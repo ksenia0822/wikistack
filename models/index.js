@@ -10,22 +10,48 @@ var Schema = mongoose.Schema;
 
 // User Schema
 var userSchema = new Schema({
-	name: String,
-	email: String
+	name: {type: String, required: true},
+	email: {type: String, required: true, unique: true},
 })
-
-// Model to use in a reference 
-var User = mongoose.model('User',userSchema)
 
 // Page Schema
 var pageSchema = new Schema({
-  title:  String,
-  urlTitle: String,
-  content: String,
+  title:  {type: String, required: true},
+  urlTitle: {type: String, required: true},
+  content: {type: String, required: true},
+  status: {type: String, enum: ['open', 'closed']},
   date: { type: Date, default: Date.now },
-  status: Boolean, // true=open, false=closed
-  author: [{
+  author: {
   	type: Schema.Types.ObjectId,
   	ref: 'User'
-  }]
+  }
 });
+
+// ???
+pageSchema.virtual('route').get(function () {
+  return '/wiki/' + this.urlTitle;
+});
+
+pageSchema.pre('validate', function(next) {
+  this.urlTitle = generateUrlTitle(this.title);
+  next();
+});
+
+function generateUrlTitle (title) {
+  if (title) {
+    return title.replace(/\s+/g, '_').replace(/\W/g, '');
+  } else {
+    return Math.random().toString(36).substring(2, 7);
+  }
+}
+
+// ??? What is the purpose of these two lines? 
+var Page = mongoose.model('Page',pageSchema)
+var User = mongoose.model('User',userSchema)
+
+
+
+module.exports = {
+  Page: Page,
+  User: User
+};

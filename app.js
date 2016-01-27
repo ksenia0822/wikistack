@@ -3,15 +3,16 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var app = express();
 var swig = require('swig');
-
-// var routes = require('./index.js');
+var wikiRouter = require('./routes/wiki')
 
 app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/static', express.static(__dirname + '/staticviews'));
+app.use('/', express.static(__dirname + '/staticviews'));
+
+app.use('/wiki', wikiRouter)
 
 //Swig configuration
 // point res.render to the proper directory
