@@ -11,7 +11,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/static', express.static(__dirname + '/public'));
+app.use('/static', express.static(__dirname + '/staticviews'));
 
 //Swig configuration
 // point res.render to the proper directory

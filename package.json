@@ -19,5 +19,8 @@
   "homepage": "https://github.com/ksenia0822/wikistack#readme",
   "devDependencies": {
     "nodemon": "^1.8.1"
+  },
+  "dependencies": {
+    "mongoose": "^4.3.7"
   }
 }
